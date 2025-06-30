@@ -4,6 +4,12 @@ import numpy as np
 # Kamera starten (0 = Standardkamera, bei Pi Camera ggf. anderes Setup nötig)
 cap = cv2.VideoCapture(0)
 
+# MJPEG einstellen
+cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+cap.set(cv2.CAP_PROP_FPS, 30)
+
 # Überprüfen, ob Kamera geöffnet werden konnte
 if not cap.isOpened():
     print("Fehler: Kamera konnte nicht geöffnet werden.")
