@@ -42,16 +42,19 @@ while True:
     # ==========================================
     roi_mask = create_roi_mask(frame.shape, roi_points)
 
+    # Kopie des output Frames damit in der Anzeige das originalbild ohne maskierung gezeigt werden kann
+    output_frame = frame.copy()
+
     # Alles außerhalb des Polygons wird geschwärzt
     masked_frame = cv2.bitwise_and(frame, frame, mask=roi_mask)
 
     # Kontur der ROI-Zone einzeichnen (optional zur Visualisierung)
-    cv2.polylines(masked_frame, [roi_points], isClosed=True, color=(0, 255, 0), thickness=2)
+    cv2.polylines(output_frame, [roi_points], isClosed=True, color=(0, 255, 0), thickness=2)
 
     # ==========================================
     # Farberkennung nur innerhalb des maskierten Bereichs
     # ==========================================
-    hsv = cv2.cvtColor(masked_frame, cv2.COLOR_BGR2HSV)
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     lower_red1 = np.array([0, 120, 70])
     upper_red1 = np.array([10, 255, 255])
@@ -84,7 +87,7 @@ while True:
             print(f"Rotes Objekt erkannt bei: X={cx}, Y={cy}")
 
     # Bild anzeigen
-    cv2.imshow("Rote Objekterkennung im ROI", masked_frame)
+    cv2.imshow("Rote Objekterkennung im ROI", output_frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
