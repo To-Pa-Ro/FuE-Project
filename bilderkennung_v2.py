@@ -77,12 +77,12 @@ while True:
         area = cv2.contourArea(cnt)
         if area > 500:
             x, y, w, h = cv2.boundingRect(cnt)
-            cv2.rectangle(masked_frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.rectangle(output_frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
             cx = x + w // 2
             cy = y + h // 2
-            cv2.circle(masked_frame, (cx, cy), 5, (255, 0, 0), -1)
-            cv2.putText(masked_frame, f"Rot bei ({cx}, {cy})", (x, y - 10),
+            cv2.circle(output_frame, (cx, cy), 5, (255, 0, 0), -1)
+            cv2.putText(output_frame, f"Rot bei ({cx}, {cy})", (x, y - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
             print(f"Rotes Objekt erkannt bei: X={cx}, Y={cy}")
 
