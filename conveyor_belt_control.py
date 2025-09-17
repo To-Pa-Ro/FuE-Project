@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-from bilderkennung_v1 import detect_red_object
+from bilderkennung_v1 import ImageRecognition
 
 
 def switch_pin(pin):
@@ -20,18 +20,21 @@ def main():
     GPIO.output(forwards_pin, GPIO.HIGH)
     GPIO.output(backwards_pin, GPIO.HIGH)
 
+    imageRecognition = ImageRecognition()
+    imageRecognition.start()
+
     # move belt forewards
     switch_pin(forwards_pin)
     start_time = time.time()
     # warten bis objekt erkannt
-    detect_red_object()
-    # warten bis Objekt komplett in Kamerabild ist (hoffentlich)
-    time.sleep(0.75)
-    # nochmal erkennen wo genau das Objekt jetzt ist
-    area = detect_red_object()
+    area = []
+    while area == []:
+        area = imageRecognition.find_area_by_x_range(300, 340)
+    
+    print(f"erkannt: {area}")
 
     # weiter fahren bis was auch immer, keine Ahnung (die 2 muss noch angepasst werden)
-    time.sleep(2) 
+    time.sleep(2)
     # belt stoppen
     switch_pin(forwards_pin)
     # hier weiteren pin stuff implementieren
@@ -45,8 +48,8 @@ def main():
     time.sleep(total_belt_moving_time)
     # stop belt
     switch_pin(backwards_pin)
-
-    
+    print("finish")
+    imageRecognition.stop()
 
 
 if __name__ == "__main__":
