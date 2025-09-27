@@ -19,10 +19,10 @@ class ImageRecognition:
         self.cap.set(cv2.CAP_PROP_FPS, 30)
 
         # Definitionen der Erkennungsbereiche
-        self.top_left_corner = np.array([100, 50])
-        self.bottom_right_corner = np.array([540, 430])
+        self.top_left_corner = np.array([100, 102])
+        self.bottom_right_corner = np.array([467, 403])
         self.horizontal_areas = 1
-        self.vertical_areas = 8
+        self.vertical_areas = 7
         self.horizontal_area_size = int((self.bottom_right_corner[0] - self.top_left_corner[0]) / self.horizontal_areas)
         self.vertical_area_size = int((self.bottom_right_corner[1] - self.top_left_corner[1]) / self.vertical_areas)
 
